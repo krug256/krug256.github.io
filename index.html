@@ -61,10 +61,10 @@
         <h3>Название игры</h3>
         <p>Краткое описание игры.</p>
         <!-- Здесь будет iframe с WebGL билдом -->
-        <div class="preview" onclick="this.style.display='none'; this.nextElementSibling.style.display='block';" style="cursor:pointer; background:#000; height:200px; display:flex; align-items:center; justify-content:center; border-radius:6px;">
+        <div class="preview" onclick="this.style.display='none'; const iframe = this.nextElementSibling; iframe.src = iframe.dataset.src; iframe.style.display='block';" style="cursor:pointer; background:#000; height:200px; display:flex; align-items:center; justify-content:center; border-radius:6px;">
     <span>▶ Нажми, чтобы запустить игру</span>
 </div>
-<iframe src="Games/Shooter/index.html" style="display:none;"></iframe>
+<iframe data-src="Games/Shooter/index.html" style="display:none;"></iframe>
         <p><a href="Games/Shooter/index.html" target="_blank">Открыть в новой вкладке</a></p>
     </div>
 
