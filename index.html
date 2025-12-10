@@ -1,164 +1,178 @@
-<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Портфолио — Илья Круглов</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #111;
-            color: #eee;
-        }
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #1e1e1e;
-        }
-        h1 {
-            margin: 0;
-            font-size: 32px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .game-card {
-            background: #1b1b1b;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
-        iframe {
-            width: 100%;
-            height: 480px;
-            border: none;
-            background: #000;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-        a {
-            color: #6cf;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Портфолио — Илья Круглов</title>
+  <style>
+    :root{--bg:#0f0f12;--card:#171717;--muted:#bfc3c8;--accent:#2979ff}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:#fff}
+    header{padding:36px 20px;background:#121212;border-bottom:1px solid #222;text-align:center}
+    h1{margin:0;font-size:28px}
+    .container{max-width:1100px;margin:28px auto;padding:0 18px}
+    h2{font-size:20px;text-align:center;margin:8px 0 22px;color:#fff}
+
+    /* grid */
+    .games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+
+    .game-card{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid #222;transition:transform .18s ease,box-shadow .18s ease}
+    .game-card:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(0,0,0,.6)}
+
+    .thumb{width:100%;height:150px;background:#000 center/cover no-repeat}
+    .content{padding:14px}
+    .title{font-size:16px;margin:0 0 8px}
+    .descr{color:var(--muted);font-size:13px;min-height:38px}
+
+    .row{display:flex;gap:8px;align-items:center;margin-top:12px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;text-decoration:none;color:#fff;background:var(--accent);font-weight:600;font-size:13px}
+    .link-muted{color:var(--muted);font-size:13px;text-decoration:none}
+
+    /* iframe preview (collapsed on small screens) */
+    .preview{width:100%;height:360px;border:0;background:#000;margin-top:12px;border-top:1px solid #232323}
+
+    footer{text-align:center;padding:18px 10px;color:#9aa0a6;margin-top:28px;border-top:1px solid #141414}
+
+    @media(max-width:600px){.preview{height:260px}}
+  </style>
 </head>
 <body>
-
-<header>
+  <header>
     <h1>Илья Круглов — Unity Developer</h1>
-</header>
+  </header>
 
-<div class="container">
-    <h2>Мои проекты</h2>
-    <div id="games-list"></div>
-</div>
+  <main class="container">
+    <h2>Мои игры</h2>
+    <div id="games-list" class="games-grid" aria-live="polite"></div>
+  </main>
 
-<div class="footer">
-    © 2025 Илья Круглов
-</div>
+  <footer>© 2025 Илья Круглов — Все права защищены</footer>
 
-<script>
-// ===========================
-// СПИСОК ИГР (редактируешь здесь)
-// ===========================
-//
-// name: название игры
-// description: текст
-// yandex: ссылка (если игра на ЯИ)  — МОЖНО НЕ УКАЗЫВАТЬ
-// folder: имя папки в /games/ для WebGL — МОЖНО НЕ УКАЗЫВАТЬ
-//
-// Если ни folder, ни yandex — игра НЕ будет показана.
-//
-
-const games = [
+  <script>
+  // === SINGLE games array — edit this block to add/remove games ===
+  // IMPORTANT: do NOT leave a trailing comma after the last object in this array.
+  const games = [
     {
-        name: "Нубики: Эпическое Комбо",
-        description: " ",
-        yandex: "https://yandex.ru/games/app/457186?embed=1"
+      id: 'shooter',
+      name: 'Shooter',
+      description: 'Стрелялка на Unity. Локально в Games/Shooter.',
+      thumb: 'Games/Shooter/shooter.webp',
+      folder: 'Games/Shooter' // page: Games/Shooter/index.html
+    },
+    {
+      id: 'example2',
+      name: 'ExampleGame2',
+      description: 'Другой тестовый проект.',
+      thumb: 'Games/Example2/thumbnail.png',
+      folder: 'Games/Example2'
+    },
+    {
+      id: 'yandexOnly',
+      name: 'YandexOnly',
+      description: 'Игра доступна только на Яндекс.Играх (пример).',
+      thumb: '',
+      yandex: 'https://yandex.ru/games/app/123456' // пример
     }
-   // {
-   //     name: "Пример локальной игры",
-   //     description: "Эта игра лежит в GitHub Pages.",
-   //     folder: "game1"           // games/game1/index.html
-   // },
-   // {
-   //     name: "Пример игры на Яндекс Играх",
-   //     description: "Эта игра открывается на ЯИ.",
-   //     yandex: "https://yandex.ru/games/app/123456"
-   // },
-   // {
-   //     name: "Игра и локально, и на ЯИ",
-   //     description: "Покажет локальную, если есть папка, иначе ссылку на ЯИ.",
-   //     folder: "game2",
-   //     yandex: "https://yandex.ru/games/app/987654"
-    //},
-    // Добавляй сюда остальные игры
-];
+  ];
+  // ==================================================================
 
-
-// ===========================
-// ЛОГИКА ОТОБРАЖЕНИЯ
-// ===========================
-
-// Проверка существования файла (через запрос)
-async function fileExists(url) {
-    try {
-        const res = await fetch(url, { method: "HEAD" });
-        return res.ok;
-    } catch {
-        return false;
+  // helper: check that a file exists via HEAD request
+  async function fileExists(url){
+    try{
+      const res = await fetch(url, { method: 'HEAD' });
+      return res.ok;
+    }catch(e){
+      return false;
     }
-}
+  }
 
-// Основная функция
-async function renderGames() {
-    const container = document.getElementById("games-list");
+  // create a default SVG data URL for missing thumbnails
+  function defaultThumbDataUrl(text){
+    const svg = `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="800" height="450"><rect width="100%" height="100%" fill="#222"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#888" font-size="28">${text}</text></svg>`;
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  }
 
-    for (const game of games) {
-        let hasLocal = false;
+  // render cards — only one declaration of `games` exists on the page
+  async function render(){
+    const container = document.getElementById('games-list');
 
-        if (game.folder) {
-            const url = `games/${game.folder}/index.html`;
-            hasLocal = await fileExists(url);
+    for(const g of games){
+      // determine availability
+      let hasLocal = false;
+      if(g.folder){
+        // expect index.html at folder root
+        const indexUrl = `${g.folder.replace(/\\/+$/,'')}/index.html`;
+        hasLocal = await fileExists(indexUrl);
+      }
+
+      // if neither local nor yandex link — skip the card
+      if(!hasLocal && !g.yandex) continue;
+
+      const card = document.createElement('article');
+      card.className = 'game-card';
+
+      const thumbUrl = g.thumb && g.thumb.trim() ? g.thumb : defaultThumbDataUrl('No Preview');
+
+      const thumb = document.createElement('div');
+      thumb.className = 'thumb';
+      thumb.style.backgroundImage = `url("${thumbUrl}")`;
+
+      const content = document.createElement('div');
+      content.className = 'content';
+
+      const title = document.createElement('h3');
+      title.className = 'title';
+      title.textContent = g.name || 'Без названия';
+
+      const descr = document.createElement('div');
+      descr.className = 'descr';
+      descr.textContent = g.description || '';
+
+      content.appendChild(title);
+      content.appendChild(descr);
+
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      // prioritize local playable build if available
+      if(hasLocal){
+        const play = document.createElement('a');
+        play.className = 'btn';
+        play.href = `${g.folder.replace(/\\/+$/,'')}/index.html`;
+        play.target = '_blank';
+        play.rel = 'noopener';
+        play.textContent = 'Играть (локально)';
+        row.appendChild(play);
+
+        content.appendChild(row);
+
+        // inline iframe preview (user can remove if they don't want heavy loads)
+        const frame = document.createElement('iframe');
+        frame.className = 'preview';
+        frame.src = `${g.folder.replace(/\\/+$/,'')}/index.html`;
+        frame.title = `${g.name} — превью`;
+        content.appendChild(frame);
+      } else {
+        // no local build — show Yandex link if present
+        if(g.yandex){
+          const ylink = document.createElement('a');
+          ylink.className = 'btn';
+          ylink.href = g.yandex;
+          ylink.target = '_blank';
+          ylink.rel = 'noopener';
+          ylink.textContent = 'Играть на Яндекс.Играх';
+          row.appendChild(ylink);
+          content.appendChild(row);
         }
+      }
 
-        // Если нет ни локальной версии, ни ссылки — пропускаем игру
-        if (!hasLocal && !game.yandex) continue;
-
-        // Создание карточки
-        const card = document.createElement("div");
-        card.className = "game-card";
-
-        let html = `
-            <h3>${game.name}</h3>
-            <p>${game.description}</p>
-        `;
-
-        if (hasLocal) {
-            html += `
-                <iframe src="games/${game.folder}/index.html"></iframe>
-                <p><a href="games/${game.folder}/index.html" target="_blank">Открыть в новой вкладке</a></p>
-            `;
-        } else if (game.yandex) {
-            html += `
-                <p><a href="${game.yandex}" target="_blank">Играть на Яндекс Играх</a></p>
-            `;
-        }
-
-        card.innerHTML = html;
-        container.appendChild(card);
+      card.appendChild(thumb);
+      card.appendChild(content);
+      container.appendChild(card);
     }
-}
+  }
 
-renderGames();
-
-</script>
-
+  // run
+  render();
+  </script>
 </body>
 </html>

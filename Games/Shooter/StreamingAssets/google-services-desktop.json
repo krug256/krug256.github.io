@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "95027029060",
+    "firebase_url": "https://stickman-hero-1387226.firebaseio.com",
+    "project_id": "stickman-hero-1387226",
+    "storage_bucket": "stickman-hero-1387226.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95027029060:android:666b70df64cf92ece54811",
+        "android_client_info": {
+          "package_name": "com.HolyStickGames.StickmanHero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95027029060-osg8sok63ted359peen9m689223gt89p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKBSEvERvAH_43507XAKNrXfBXWuF3GQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95027029060-osg8sok63ted359peen9m689223gt89p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
