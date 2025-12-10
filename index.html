@@ -49,34 +49,116 @@
     </style>
 </head>
 <body>
+
 <header>
     <h1>Илья Круглов — Unity Developer</h1>
 </header>
 
 <div class="container">
     <h2>Мои проекты</h2>
-
-    <!-- Пример блока игры -->
-    <div class="game-card">
-        <h3>Название игры</h3>
-        <p>Краткое описание игры.</p>
-        <!-- Здесь будет iframe с WebGL билдом -->
-        <iframe src="games/game1/index.html"></iframe>
-        <p><a href="games/game1/index.html" target="_blank">Открыть в новой вкладке</a></p>
-    </div>
-
-    <div class="game-card">
-        <h3>Название игры 2</h3>
-        <p>Описание второй игры.</p>
-        <iframe src="games/game2/index.html"></iframe>
-        <p><a href="games/game2/index.html" target="_blank">Открыть</a></p>
-    </div>
-
+    <div id="games-list"></div>
 </div>
 
 <div class="footer">
     © 2025 Илья Круглов
 </div>
+
+<script>
+// ===========================
+// СПИСОК ИГР (редактируешь здесь)
+// ===========================
+//
+// name: название игры
+// description: текст
+// yandex: ссылка (если игра на ЯИ)  — МОЖНО НЕ УКАЗЫВАТЬ
+// folder: имя папки в /games/ для WebGL — МОЖНО НЕ УКАЗЫВАТЬ
+//
+// Если ни folder, ни yandex — игра НЕ будет показана.
+//
+
+const games = [
+    {
+        name: " ",
+        description: " ",
+        yandex: "https://yandex.ru/games/app/457186?embed=1"
+    }
+   // {
+   //     name: "Пример локальной игры",
+   //     description: "Эта игра лежит в GitHub Pages.",
+   //     folder: "game1"           // games/game1/index.html
+   // },
+   // {
+   //     name: "Пример игры на Яндекс Играх",
+   //     description: "Эта игра открывается на ЯИ.",
+   //     yandex: "https://yandex.ru/games/app/123456"
+   // },
+   // {
+   //     name: "Игра и локально, и на ЯИ",
+   //     description: "Покажет локальную, если есть папка, иначе ссылку на ЯИ.",
+   //     folder: "game2",
+   //     yandex: "https://yandex.ru/games/app/987654"
+    //},
+    // Добавляй сюда остальные игры
+];
+
+
+// ===========================
+// ЛОГИКА ОТОБРАЖЕНИЯ
+// ===========================
+
+// Проверка существования файла (через запрос)
+async function fileExists(url) {
+    try {
+        const res = await fetch(url, { method: "HEAD" });
+        return res.ok;
+    } catch {
+        return false;
+    }
+}
+
+// Основная функция
+async function renderGames() {
+    const container = document.getElementById("games-list");
+
+    for (const game of games) {
+        let hasLocal = false;
+
+        if (game.folder) {
+            const url = `games/${game.folder}/index.html`;
+            hasLocal = await fileExists(url);
+        }
+
+        // Если нет ни локальной версии, ни ссылки — пропускаем игру
+        if (!hasLocal && !game.yandex) continue;
+
+        // Создание карточки
+        const card = document.createElement("div");
+        card.className = "game-card";
+
+        let html = `
+            <h3>${game.name}</h3>
+            <p>${game.description}</p>
+        `;
+
+        if (hasLocal) {
+            html += `
+                <iframe src="games/${game.folder}/index.html"></iframe>
+                <p><a href="games/${game.folder}/index.html" target="_blank">Открыть в новой вкладке</a></p>
+            `;
+        } else if (game.yandex) {
+            html += `
+                <p><a href="${game.yandex}" target="_blank">Играть на Яндекс Играх</a></p>
+            `;
+        }
+
+        card.innerHTML = html;
+        container.appendChild(card);
+    }
+}
+
+renderGames();
+
+</script>
 
 </body>
 </html>
