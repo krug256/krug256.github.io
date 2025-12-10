@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портфолио — Илья Круглов</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,43 +13,68 @@
             background: #111;
             color: #eee;
         }
+
         header {
             padding: 20px;
             text-align: center;
             background: #1e1e1e;
         }
+
         h1 {
             margin: 0;
             font-size: 32px;
         }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
+
+        /* ВИЗУАЛЬНОЕ ОТДЕЛЕНИЕ КАРТОЧЕК */
         .game-card {
             background: #1b1b1b;
             padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             border-radius: 8px;
+            border: 1px solid #333;
         }
+
         iframe {
             width: 100%;
             height: 480px;
             border: none;
             background: #000;
         }
+
+        a {
+            color: #6cf;
+        }
+
         .footer {
             text-align: center;
             padding: 20px;
             color: #666;
         }
-        a {
-            color: #6cf;
+
+        .preview {
+            cursor: pointer;
+            background: #000;
+            height: 200px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
+
 <body>
+
 <header>
     <h1>Илья Круглов — Unity Developer</h1>
 </header>
@@ -56,23 +82,64 @@
 <div class="container">
     <h2>Мои проекты</h2>
 
-    <!-- Пример блока игры -->
+    <!-- Игра 1 — Shooter (WebGL) -->
     <div class="game-card">
-        <h3>Название игры</h3>
-        <p>Краткое описание игры.</p>
-        <!-- Здесь будет iframe с WebGL билдом -->
-        <div class="preview" onclick="this.style.display='none'; const iframe = this.nextElementSibling; iframe.src = iframe.dataset.src; iframe.style.display='block';" style="cursor:pointer; background:#000; height:200px; display:flex; align-items:center; justify-content:center; border-radius:6px;">
-    <span>▶ Нажми, чтобы запустить игру</span>
-</div>
-<iframe data-src="Games/Shooter/index.html" style="display:none;"></iframe>
+        <h3>Shooter</h3>
+        <p>Описание игры: динамичный шутер на Unity.</p>
+
+        <div class="preview"
+             onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <img src="Previews/Shooter.webp">
+        </div>
+
+        <iframe src="Games/Shooter/index.html" style="display:none;"></iframe>
+
         <p><a href="Games/Shooter/index.html" target="_blank">Открыть в новой вкладке</a></p>
     </div>
 
+
+    <!-- Игра 2 — Нубики: Эпическое Комбо -->
     <div class="game-card">
-        <h3>Название игры 2</h3>
-        <p>Описание второй игры.</p>
-        <iframe src="Games/game2/index.html"></iframe>
-        <p><a href="Games/game2/index.html" target="_blank">Открыть</a></p>
+        <h3>Нубики: Эпическое Комбо</h3>
+        <p>Описание игры: добавь свой текст.</p>
+
+        <a href="https://yandex.ru/games/app/457186?lang=ru" target="_blank">
+            <div class="preview">
+                <img src="Previews/NoobsCombo.webp">
+            </div>
+        </a>
+
+        <p><a href="https://yandex.ru/games/app/457186?lang=ru" target="_blank">Играть на Яндекс Играх</a></p>
+    </div>
+
+
+    <!-- Игра 3 — Нубик, уйди с дороги -->
+    <div class="game-card">
+        <h3>Нубик, уйди с дороги</h3>
+        <p>Описание игры: добавь свой текст.</p>
+
+        <a href="https://yandex.ru/games/app/297440?lang=ru" target="_blank">
+            <div class="preview">
+                <img src="Previews/NoobsCars.webp">
+            </div>
+        </a>
+
+        <p><a href="https://yandex.ru/games/app/297440?lang=ru" target="_blank">Играть на Яндекс Играх</a></p>
+    </div>
+
+
+    <!-- Игра 4 — Stickman Reaper -->
+    <div class="game-card">
+        <h3>Stickman Reaper</h3>
+        <p>Описание игры: добавь свой текст.</p>
+
+        <a href="https://yandex.ru/games/app/181136" target="_blank">
+            <div class="preview">
+                <img src="Previews/StickmanReaper.png">
+            </div>
+        </a>
+
+        <p><a href="https://yandex.ru/games/app/181136" target="_blank">Играть на Яндекс Играх</a></p>
     </div>
 
 </div>
