@@ -1,4 +1,4 @@
-// games.js Ч рабоча¤ верси¤
+// games.js — рабочая версия
 
 export const games = [
   {
@@ -6,11 +6,11 @@ export const games = [
     title: "Stickman Shooter",
     year: 2019,
     description: `
-¬тора¤ игра, которую ¤ делал один и релизнул. ¬еб-верси¤ может работать нестабильно, а верси¤ дл¤ Android должна работать нормально.
+Вторая игра, которую я делал один и релизнул. Веб-версия может работать нестабильно, а версия для Android должна работать нормально.
 
-ѕервую версию ¤ сделал за мес¤ц ещЄ в 2019 под Android. ѕопул¤рности она не получила, а вскоре Google Play еЄ удалил. ѕозже, где-то в 2021Ц2022, ¤ решил адаптировать еЄ под WebGL (яндекс »гры) и также обновил Android-версию.
+Первую версию я сделал за месяц ещё в 2019 под Android. Популярности она не получила, а вскоре Google Play её удалил. Позже, где-то в 2021–2022, я решил адаптировать её под WebGL (Яндекс Игры) и также обновил Android-версию.
 
-—ейчас верси¤ дл¤ Android работает стабильно. WebGL сборка стара¤ и местами сломана, так как Unity несколько раз обновл¤лась.
+Сейчас версия для Android работает стабильно. WebGL сборка старая и местами сломана, так как Unity несколько раз обновлялась.
 `,
     preview: "Previews/Shooter.webp",
     type: "iframe",
@@ -22,9 +22,9 @@ export const games = [
 
   {
     id: "noobs-combo",
-    title: "Ќубики: Ёпическое  омбо",
+    title: "Нубики: Эпическое Комбо",
     year: 2025,
-    description: " лон старой флэш-игры Epic Combo, но с нубиками вместо черепашек. ƒелал примерно 2 мес¤ца.",
+    description: "Клон старой флэш-игры Epic Combo, но с нубиками вместо черепашек. Делал примерно 2 месяца.",
     preview: "Previews/NoobsCombo.webp",
     type: "external",
     actions: {
@@ -34,9 +34,9 @@ export const games = [
 
   {
     id: "noob-road",
-    title: "Ќубик, уйди с дороги",
+    title: "Нубик, уйди с дороги",
     year: 2024,
-    description: "Ќебольшой проект, делали вместе с другом около мес¤ца.",
+    description: "Небольшой проект, делали вместе с другом около месяца.",
     preview: "Previews/NoobsCars.webp",
     type: "external",
     actions: {
@@ -48,7 +48,7 @@ export const games = [
     id: "reaper",
     title: "Stickman Reaper",
     year: 2018,
-    description: "—лэшер. ƒелал в паре с другом, изначально под Android.",
+    description: "Слэшер. Делал в паре с другом, изначально под Android.",
     preview: "Previews/StickmanReaper.png",
     type: "external",
     actions: {
@@ -60,7 +60,7 @@ export const games = [
     id: "first-flight",
     title: "First Flight",
     year: 2017,
-    description: "—ама¤ перва¤ игра.",
+    description: "Самая первая игра.",
     preview: "https://trashbox.ru/apk_icons/826029_192.png",
     type: "external",
     actions: {
@@ -71,10 +71,10 @@ export const games = [
   {
     id: "warsmiths",
     title: "Warsmiths",
-    year: "2020Ц2023",
+    year: "2020–2023",
     description: `
-ѕервый и единственный проект, где ¤ работал на коммерческой основе. ћобильна¤ стратегическа¤ RPG. 
-–аботал с легаси-кодом, боевой логикой, интерфейсом, анимаци¤ми, эффектами, звуками, префабами, аниматором и отладкой.
+Первый и единственный проект, где я работал на коммерческой основе. Мобильная стратегическая RPG. 
+Работал с легаси-кодом, боевой логикой, интерфейсом, анимациями, эффектами, звуками, префабами, аниматором и отладкой.
 `,
     preview:
       "https://play-lh.googleusercontent.com/CnrRRXrILrA7BpDTq_M1Dpucl9NtlLl-OcjMuv6NjlleMa97mjH_9ZVSqrQvimIWtw=w1024-rw",
