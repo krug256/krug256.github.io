@@ -73,6 +73,7 @@
             border: none;
             background: #000;
             display: none;
+            margin-top: 15px;
         }
 
         .store-btn {
@@ -109,19 +110,17 @@ document.addEventListener("DOMContentLoaded", () => {
         card.innerHTML = `
             <h3>${game.title} (${game.year})</h3>
             <p>${game.description}</p>
-
-            <div class="preview"></div>
+            <div class="preview">
+                <img src="${game.preview}">
+                <div class="play-btn">${
+                    game.type === "iframe" ? "Играть" :
+                    game.type === "external" ? "Играть" :
+                    "Скачать APK"
+                }</div>
+            </div>
         `;
 
         const preview = card.querySelector(".preview");
-        preview.innerHTML = `
-            <img src="${game.preview}">
-            <div class="play-btn">${
-                game.type === "iframe" ? "Играть" :
-                game.type === "external" ? "Играть" :
-                "Скачать APK"
-            }</div>
-        `;
 
         if (game.type === "iframe") {
             const iframe = document.createElement("iframe");
