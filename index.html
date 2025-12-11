@@ -72,14 +72,7 @@
             height: 480px;
             border: none;
             background: #000;
-        }
-
-        a { color: #6cf; }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
+            display: none;
         }
 
         .store-btn {
@@ -92,13 +85,77 @@
             align-items:center;
             gap:8px;
         }
-
         .store-btn img {
-            width:20px;
-            height:20px;
-            border-radius:4px;
+            width:20px; height:20px; border-radius:4px;
+        }
+
+        .footer {
+            text-align:center;
+            padding:20px;
+            color:#666;
         }
     </style>
+
+    <script defer src="games.js"></script>
+    <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.querySelector(".container");
+
+        games.forEach(game => {
+            const card = document.createElement("div");
+            card.className = "game-card";
+
+            card.innerHTML = `
+                <h3>${game.title} (${game.year})</h3>
+                <p>${game.description}</p>
+
+                <div class="preview"></div>
+            `;
+
+            const preview = card.querySelector(".preview");
+            preview.innerHTML = `
+                <img src="${game.preview}">
+                <div class="play-btn">${
+                    game.type === "iframe" ? "Играть" :
+                    game.type === "external" ? "Играть" :
+                    "Скачать APK"
+                }</div>
+            `;
+
+            if (game.type === "iframe") {
+                const iframe = document.createElement("iframe");
+                iframe.src = game.actions.iframe;
+
+                preview.onclick = () => {
+                    preview.style.display = "none";
+                    iframe.style.display = "block";
+                };
+
+                card.appendChild(iframe);
+            }
+
+            if (game.type === "external") {
+                preview.onclick = () => window.open(game.actions.external, "_blank");
+            }
+
+            if (game.actions.gp) {
+                const box = document.createElement("div");
+                box.style.marginTop = "15px";
+
+                box.innerHTML = `
+                    <a class="store-btn" target="_blank" href="${game.actions.gp}">
+                        <img src="https://play-lh.googleusercontent.com/wHASOQQnnyZmzIG-M6FEuPrJV4jZdgeNoB_myU2MMy2CA-o1Wm6Fm0mKNx0XJE5vzg=s48-rw">
+                        Google Play
+                    </a>
+                `;
+
+                card.appendChild(box);
+            }
+
+            container.appendChild(card);
+        });
+    });
+    </script>
 </head>
 
 <body>
@@ -108,85 +165,6 @@
 
 <div class="container">
     <h2>Мои проекты</h2>
-
-    <!-- Shooter -->
-    <div class="game-card">
-        <h3>Stickman Shooter (2019)</h3>
-        <p> Веб версия может быть не стабильной.Изначально делал под андроид, потом под веб, и снова под андроид. 
-        В итоге веб версия немного пострадала когда я обновил юнити до 6-ки и начал снова переделывать игру)) в итоге я забил 
-        а чинить её уже нет желания</p>
-
-        <div class="preview" onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <img src="Previews/Shooter.webp">
-            <div class="play-btn">Играть</div>
-        </div>
-
-        <iframe src="Games/Shooter/index.html" style="display:none;"></iframe>
-
-        <div style="margin-top: 15px;">
-            <a class="store-btn" target="_blank" href="https://play.google.com/store/apps/details?id=com.HolyStickGames.StickmanHero">
-                <img src="https://play-lh.googleusercontent.com/wHASOQQnnyZmzIG-M6FEuPrJV4jZdgeNoB_myU2MMy2CA-o1Wm6Fm0mKNx0XJE5vzg=s48-rw">
-                Google Play
-            </a>
-        </div>
-    </div>
-
-    <!-- Нубики: Эпическое Комбо -->
-    <div class="game-card">
-        <h3>Нубики: Эпическое Комбо(2025)</h3>
-        <p>Клон старой флэшки Epic Combo</p>
-
-        <div class="preview" onclick="window.open('https://yandex.ru/games/app/457186?lang=ru','_blank')">
-            <img src="Previews/NoobsCombo.webp">
-            <div class="play-btn">Играть</div>
-        </div>
-    </div>
-
-    <!-- Нубик, уйди с дороги -->
-    <div class="game-card">
-        <h3>Нубик, уйди с дороги (2024)</h3>
-        <p> </p>
-
-        <div class="preview" onclick="window.open('https://yandex.ru/games/app/297440?lang=ru','_blank')">
-            <img src="Previews/NoobsCars.webp">
-            <div class="play-btn">Играть</div>
-        </div>
-    </div>
-
-    <!-- Stickman Reaper -->
-    <div class="game-card">
-        <h3>Stickman Reaper (2018)</h3>
-        <p>Слэшер. Делал в паре с другом, изначально под андроид. В целом, тут я занимался почти всем кроме UI</p>
-
-        <div class="preview" onclick="window.open('https://yandex.ru/games/app/181136','_blank')">
-            <img src="Previews/StickmanReaper.png">
-            <div class="play-btn">Играть</div>
-        </div>
-    </div>
-
-    <!-- First Flight (2017) -->
-    <div class="game-card">
-        <h3>First Flight (2017)</h3>
-        <p>Моя самая первая игра, созданная в 2017 году.</p>
-
-        <div class="preview" onclick="window.open('https://trashbox.ru/link/first-flight-android','_blank')">
-            <img src="https://trashbox.ru/apk_icons/826029_192.png">
-            <div class="play-btn">Скачать APK</div>
-        </div>
-    </div>
-
-    <!-- Warsmiths -->
-    <div class="game-card">
-        <h3>Warsmiths</h3>
-        <p>Мобильная стратегическая RPG. В проекте я участвовал несколько лет (2020 — 2023): Работа с легаси кодом, написание дополнительной логики поверх имеющейся в т.ч боевой системы, интерфейса,  так же немного клент-сереверной логики.
- "Прилажевание" эффектов , анимаций, звуков, работа с префабами настройка аниматора. Отладка, поиск и исправление багов.</p>
-
-        <div class="preview" onclick="window.open('https://play.google.com/store/apps/details?id=com.insensearts.warsmiths','_blank')">
-            <img src="https://play-lh.googleusercontent.com/CnrRRXrILrA7BpDTq_M1Dpucl9NtlLl-OcjMuv6NjlleMa97mjH_9ZVSqrQvimIWtw=w1024-rw">
-            <div class="play-btn">Google Play</div>
-        </div>
-    </div>
-
 </div>
 
 <div class="footer">
