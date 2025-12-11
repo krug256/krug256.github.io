@@ -83,28 +83,40 @@
     <h2>Мои проекты</h2>
 
     <!-- Игра 1 — Shooter (WebGL) -->
-    <div class="game-card">
-        <h3>Shooter</h3>
-        <p>Описание игры: динамичный шутер на Unity.</p>
+<div class="game-card">
+    <h3>Shooter</h3>
+    <p>Описание игры: динамичный шутер на Unity.</p>
 
-        <div class="preview"
-             onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <img src="Previews/Shooter.webp">
-        </div>
-
-        <iframe src="Games/Shooter/index.html" style="display:none;"></iframe>
-
-        <p><a href="Games/Shooter/index.html" target="_blank">Открыть в новой вкладке</a></p>
-            <a href="https://play.google.com/store/apps/details?id=com.HolyStickGames.StickmanHero" target="_blank">
-        <div class="preview">
-            <img src="Previews/StickmanHero.jpg">
-        </div>
-    </a>
-
-    <p><a href="https://play.google.com/store/apps/details?id=com.HolyStickGames.StickmanHero" target="_blank">
-        Скачать на Google Play
-    </a></p>
+    <!-- Превью запуска -->
+    <div class="preview"
+         onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <img src="Previews/Shooter.webp">
     </div>
+
+    <!-- Встроенный запуск игры -->
+    <iframe src="Games/Shooter/index.html" style="display:none;"></iframe>
+
+    <!-- Кнопки -->
+    <div style="margin-top: 15px; display: flex; gap: 15px;">
+
+        <!-- Кнопка Играть (как раньше) -->
+        <a href="#" onclick="this.closest('.game-card').querySelector('.preview').click(); return false;"
+           style="padding: 10px 16px; background:#333; border-radius:6px; color:#6cf; text-decoration:none;">
+            Играть
+        </a>
+
+        <!-- Кнопка Google Play -->
+        <a href="https://play.google.com/store/apps/details?id=com.HolyStickGames.StickmanHero"
+           target="_blank"
+           style="padding: 10px 16px; background:#222; border-radius:6px; color:#6cf; text-decoration:none; display:flex; align-items:center; gap:8px;">
+
+            <img src="https://play-lh.googleusercontent.com/0lVmqgkO06HEkW0_5asljYGNeHawVQ1n7we5r2Su9PBJbe3bcgCNu1rG_R87E0c2bg=w48-h48-rw"
+                 style="width:20px; height:20px; border-radius:4px;">
+
+            Google Play
+        </a>
+    </div>
+</div>
 
     <!-- ------------------------ -->
 
