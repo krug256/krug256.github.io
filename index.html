@@ -87,36 +87,53 @@
     <h3>Shooter</h3>
     <p>Описание игры: динамичный шутер на Unity.</p>
 
-    <!-- Превью запуска -->
-    <div class="preview"
+    <!-- Превью с кнопкой Играть поверх -->
+    <div class="preview" style="position: relative;"
          onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
         <img src="Previews/Shooter.webp">
+
+        <!-- Кнопка поверх превью -->
+        <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.65);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 18px;
+            color: #fff;
+            pointer-events: none;">
+            Играть
+        </div>
     </div>
 
     <!-- Встроенный запуск игры -->
     <iframe src="Games/Shooter/index.html" style="display:none;"></iframe>
 
-    <!-- Кнопки -->
-    <div style="margin-top: 15px; display: flex; gap: 15px;">
-
-        <!-- Кнопка Играть (как раньше) -->
-        <a href="#" onclick="this.closest('.game-card').querySelector('.preview').click(); return false;"
-           style="padding: 10px 16px; background:#333; border-radius:6px; color:#6cf; text-decoration:none;">
-            Играть
-        </a>
-
-        <!-- Кнопка Google Play -->
+    <!-- Кнопка Google Play -->
+    <div style="margin-top: 15px;">
         <a href="https://play.google.com/store/apps/details?id=com.HolyStickGames.StickmanHero"
            target="_blank"
-           style="padding: 10px 16px; background:#222; border-radius:6px; color:#6cf; text-decoration:none; display:flex; align-items:center; gap:8px;">
-
-            <img src="https://play-lh.googleusercontent.com/0lVmqgkO06HEkW0_5asljYGNeHawVQ1n7we5r2Su9PBJbe3bcgCNu1rG_R87E0c2bg=w48-h48-rw"
+           style="
+               padding: 10px 16px;
+               background:#222;
+               border-radius:6px;
+               color:#6cf;
+               text-decoration:none;
+               display:inline-flex;
+               align-items:center;
+               gap:8px;">
+            
+            <img src="https://play-lh.googleusercontent.com/wHASOQQnnyZmzIG-M6FEuPrJV4jZdgeNoB_myU2MMy2CA-o1Wm6Fm0mKNx0XJE5vzg=s48-rw"
                  style="width:20px; height:20px; border-radius:4px;">
 
             Google Play
         </a>
     </div>
 </div>
+
 
     <!-- ------------------------ -->
 
