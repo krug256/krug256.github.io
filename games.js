@@ -61,6 +61,7 @@ export const games = [
     title: "First Flight",
     year: 2017,
     description: "Самая первая игра.",
+    cta: "Скачать APK",
     preview: "https://trashbox.ru/apk_icons/826029_192.png",
     type: "external",
     actions: {
