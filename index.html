@@ -1,181 +1,441 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Портфолио — Илья Круглов</title>
-
+    <title>Holy Stick Games</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            padding: 0;
-            background: #111;
+            background: #0f0f0f;
             color: #eee;
-        }
-
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #1e1e1e;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 32px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        .game-card {
-            background: #1b1b1b;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3rem;
+            color: #fff;
+        }
+
+        .dev-status {
+            color: #6cf;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: #aaa;
+            text-decoration: none;
             border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: 0.3s;
         }
 
-        .preview {
+        .social-links a:hover {
+            background: #222;
+            color: #6cf;
+            border-color: #6cf;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #161616;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #222;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: #888;
+            padding: 15px 25px;
             cursor: pointer;
-            background: #000;
-            height: 200px;
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
+            font-size: 1rem;
+            border-bottom: 3px solid transparent;
         }
 
-        .preview img {
+        nav button.active {
+            color: #6cf;
+            border-bottom-color: #6cf;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px 0;
+            animation: fadeIn 0.4s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .section-title {
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card img {
             width: 100%;
-            height: 100%;
+            height: 180px;
             object-fit: cover;
         }
 
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.65);
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 18px;
-            color: #fff;
-            pointer-events: none;
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
-        iframe {
+        .card h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #ccc;
+            flex-grow: 1;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            color: #000;
+        }
+
+        .btn-yandex {
+            background: #ffcc00;
+        }
+
+        .btn-gp {
+            background: #3bccff;
+        }
+
+        .btn-apk {
+            background: #333;
+            color: #fff;
+        }
+
+        .btn-story {
+            background: transparent;
+            color: #6cf;
+            border: 1px solid #6cf;
+        }
+
+        .btn-story:hover {
+            background: rgba(102, 204, 255, 0.1);
+        }
+
+        .contact-block {
+            background: #161616;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #6cf;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 480px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 1.5rem;
+            border: none;
+            background: none;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-text {
+            white-space: pre-wrap;
+            color: #ccc;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+
+        /* Game Modal Specifics */
+        #game-modal .modal-content {
+            max-width: 1200px;
+            width: 95%;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+
+        #game-modal .modal-close {
+            top: -40px;
+            right: 0;
+            font-size: 2.5rem;
+        }
+
+        #game-iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
             border: none;
             background: #000;
-            display: none;
-            margin-top: 15px;
+            border-radius: 12px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
 
-        .store-btn {
-            padding: 10px 16px;
-            background:#222;
-            border-radius:6px;
-            color:#6cf;
-            text-decoration:none;
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-        }
-        .store-btn img {
-            width:20px; height:20px; border-radius:4px;
-        }
-
-        .footer {
-            text-align:center;
-            padding:20px;
-            color:#666;
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #444;
+            font-size: 0.8rem;
         }
     </style>
-
-<script type="module" defer>
-import { games } from './games.js';
-
-document.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".container");
-
-    games.forEach(game => {
-        const card = document.createElement("div");
-        card.className = "game-card";
-
-        card.innerHTML = `
-            <h3>${game.title} (${game.year})</h3>
-            <p>${game.description}</p>
-            <div class="preview">
-                <img src="${game.preview}">
-                <div class="play-btn">${
-                    game.cta ?? (game.type === "iframe" ? "Играть" :
-                    game.type === "external" ? "Играть" :
-                    "Скачать APK"
-                    )
-                }</div>
-            </div>
-        `;
-
-        const preview = card.querySelector(".preview");
-
-        if (game.type === "iframe") {
-            const iframe = document.createElement("iframe");
-            iframe.src = game.actions.iframe;
-
-            preview.onclick = () => {
-                preview.style.display = "none";
-                iframe.style.display = "block";
-            };
-
-            card.appendChild(iframe);
-        }
-
-        if (game.type === "external") {
-            preview.onclick = () => {
-                const newTab = window.open(game.actions.external, "_blank", "noopener,noreferrer");
-                if (newTab) {
-                    newTab.opener = null;
-                }
-            };
-        }
-
-        if (game.actions.gp) {
-            const box = document.createElement("div");
-            box.style.marginTop = "15px";
-
-            box.innerHTML = `
-                <a class="store-btn" target="_blank" rel="noopener noreferrer" href="${game.actions.gp}">
-                    <img src="https://play-lh.googleusercontent.com/wHASOQQnnyZmzIG-M6FEuPrJV4jZdgeNoB_myU2MMy2CA-o1Wm6Fm0mKNx0XJE5vzg=s48-rw">
-                    Google Play
-                </a>
-            `;
-
-            card.appendChild(box);
-        }
-
-        container.appendChild(card);
-    });
-});
-</script>
 </head>
 
 <body>
-<header>
-    <h1>Илья Круглов — Unity Developer</h1>
-</header>
 
-<div class="container">
-    <h2>Мои проекты</h2>
-</div>
+    <header>
+        <h1 id="site-title"></h1>
+        <div class="dev-status" id="site-subtitle"></div>
+        <div class="social-links" id="social-container"></div>
+    </header>
 
-<div class="footer">
-    © 2025 Илья Круглов
-</div>
+    <nav>
+        <button class="active" onclick="showTab('solo')">Мои игры</button>
+        <button onclick="showTab('coop')">Совместные проекты</button>
+        <button onclick="showTab('commercial')">Коммерческий опыт</button>
+        <button onclick="showTab('contacts')">Контакты</button>
+    </nav>
 
+    <div class="container">
+        <div id="tab-solo" class="tab-content active">
+            <h2 class="section-title">Текущие проекты</h2>
+            <div class="grid" id="grid-solo-new"></div>
+
+            <h2 class="section-title">Архив (Старые игры)</h2>
+            <div class="grid" id="grid-solo-old"></div>
+        </div>
+
+        <div id="tab-coop" class="tab-content">
+            <div class="grid" id="grid-coop"></div>
+        </div>
+
+        <div id="tab-commercial" class="tab-content">
+            <div class="grid" id="grid-commercial"></div>
+        </div>
+
+        <div id="tab-contacts" class="tab-content">
+            <div class="contact-block">
+                <div id="contacts-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="story-modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event)">×</button>
+            <h2 id="modal-title" style="margin-top:0;"></h2>
+            <div class="modal-text" id="modal-body"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="game-modal" onclick="closeGameModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeGameModal(event)">×</button>
+            <iframe id="game-iframe"></iframe>
+        </div>
+    </div>
+
+    <footer id="site-footer"></footer>
+
+    <script type="module">
+        import { siteData } from './data.js';
+
+        // UI Initialization
+        document.title = siteData.profile.title;
+        document.getElementById('site-title').textContent = siteData.profile.title;
+        document.getElementById('site-subtitle').textContent = siteData.profile.subtitle;
+        document.getElementById('site-footer').textContent = `© ${siteData.profile.year} ${siteData.profile.title}`;
+
+        const socialContainer = document.getElementById('social-container');
+        siteData.profile.socials.forEach(s => {
+            socialContainer.innerHTML += `<a href="${s.url}" target="_blank">${s.name}</a>`;
+        });
+
+        const contactsContainer = document.getElementById('contacts-container');
+        siteData.profile.contacts.forEach(c => {
+            contactsContainer.innerHTML += `<p><strong>${c.label}:</strong> ${c.value}</p>`;
+        });
+
+        // Navigation
+        window.showTab = (id) => {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(`tab-${id}`).classList.add('active');
+            event.currentTarget.classList.add('active');
+        };
+
+        // Story Modal Logic
+        window.openModal = (title, textHtml) => {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').innerHTML = textHtml;
+            document.getElementById('story-modal').classList.add('active');
+        };
+
+        window.closeModal = (e) => {
+            if (e) e.stopPropagation();
+            document.getElementById('story-modal').classList.remove('active');
+        };
+
+        // Game Modal Logic
+        window.playIframe = (src) => {
+            document.getElementById('game-iframe').src = src;
+            document.getElementById('game-modal').classList.add('active');
+        };
+
+        window.closeGameModal = (e) => {
+            if (e) e.stopPropagation();
+            document.getElementById('game-modal').classList.remove('active');
+            document.getElementById('game-iframe').src = '';
+        };
+
+        // Card Builder
+        const createCard = (game) => {
+            const div = document.createElement('div');
+            div.className = 'card';
+
+            let buttonsHtml = '';
+            if (game.type === 'iframe') {
+                buttonsHtml += `<button class="btn btn-yandex" onclick="playIframe('${game.actions.iframe}')">Играть в браузере</button>`;
+            } else if (game.actions.external) {
+                buttonsHtml += `<a href="${game.actions.external}" class="btn btn-yandex" target="_blank">Ссылка</a>`;
+            }
+
+            if (game.actions.gp) {
+                buttonsHtml += `<a href="${game.actions.gp}" class="btn btn-gp" target="_blank">Google Play</a>`;
+            }
+            if (game.id === 'first-flight') {
+                buttonsHtml += `<a href="${game.actions.external}" class="btn btn-apk" target="_blank">Скачать APK</a>`;
+            }
+
+            let storyBtn = game.fullDesc ? `<button class="btn btn-story" onclick="openModal('${game.title}', \`${game.fullDesc}\`)">История разработки</button>` : '';
+
+            div.innerHTML = `
+            <img src="${game.preview}" alt="${game.title}">
+            <div class="card-body">
+                <h3>${game.title} (${game.year})</h3>
+                <p>${game.shortDesc}</p>
+                ${storyBtn ? `<div class="btn-group">${storyBtn}</div>` : ''}
+                <div class="btn-group">${buttonsHtml}</div>
+            </div>
+        `;
+            return div;
+        };
+
+        // Populate Grids
+        siteData.games.forEach(g => {
+            const containerId = `grid-${g.category}`;
+            const container = document.getElementById(containerId);
+            if (container) container.appendChild(createCard(g));
+        });
+    </script>
 </body>
+
 </html>
