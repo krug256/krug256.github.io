@@ -85,7 +85,7 @@ export const siteData = {
       year: 2018,
       category: "coop",
       shortDesc: "Слэшер, изначально под Android.",
-      fullDesc: "Делал в паре с другом (<a href='https://yandex.com/games/developer/39390' target='_blank' style='color:#6cf; text-decoration:none;'>Woger Games</a>).",
+      fullDesc: "Делал в паре с другом (<a href='https://yandex.com/games/developer/39390' target='_blank' style='color:#6cf; text-decoration:none;'>Woger Games</a>). По правде единственная реально успешная игра. На Гулплей больше 3 млн установок, но, к сожалению тот аккаунт был удален.",
       preview: "Previews/StickmanReaper.png",
       type: "external",
       actions: {
