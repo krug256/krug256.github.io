@@ -415,8 +415,7 @@
                 buttonsHtml += `<a href="${game.actions.external}" class="btn btn-apk" target="_blank">Скачать APK</a>`;
             }
 
-            let storyBtn = game.fullDesc ? `<button class="btn btn-story" onclick="openModal('${game.title}', \`${game.fullDesc}\`)">История разработки</button>` : '';
-
+            let storyBtn = game.fullDesc ? `<button class="btn btn-story" onclick="openModal('${game.title}', \`${game.fullDesc}\`)" title="Подробнее о разработке">▼</button>` : '';
             div.innerHTML = `
             <img src="${game.preview}" alt="${game.title}">
             <div class="card-body">

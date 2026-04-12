@@ -28,6 +28,19 @@ export const siteData = {
       }
     },
     {
+      id: "cars-vs-zombies",
+      title: "Тачки против зомби",
+      year: 2026,
+      category: "solo-new",
+      shortDesc: "3D-экшен в духе Earn to Die.",
+      fullDesc: "Разработка заняла 3 месяца вместо запланированного одного. Для соблюдения таймбоксинга часть задумок пошла под нож. Проект зарелижен в текущем виде, чтобы избежать производственного ада и сфокусироваться на новых задачах.",
+      preview: "Previews/CarsVsZombies.png",
+      type: "external",
+      actions: {
+        external: "https://yandex.ru/games/app/tachki-protiv-zombi-489629?lang=ru"
+      }
+    },
+    {
       id: "shooter",
       title: "Stickman Shooter",
       year: 2019,
