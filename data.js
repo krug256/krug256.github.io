@@ -37,7 +37,8 @@ export const siteData = {
       preview: "Previews/CarsVsZombies.png",
       type: "external",
       actions: {
-        external: "https://yandex.ru/games/app/tachki-protiv-zombi-489629?lang=ru"
+        external: "https://yandex.ru/games/app/tachki-protiv-zombi-489629?lang=ru",
+        gp: "https://play.google.com/store/apps/details?id=com.HolyStickGames.CarsVSZombies"
       }
     },
     {
