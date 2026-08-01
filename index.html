@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -24,6 +24,7 @@
             text-align: center;
             padding: 60px 20px;
             background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            position: relative;
         }
 
         h1 {
@@ -59,6 +60,44 @@
             background: #222;
             color: #6cf;
             border-color: #6cf;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #888;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .lang-btn:not(:last-child) {
+            border-right: 1px solid #333;
+        }
+
+        .lang-btn.active {
+            background: #6cf;
+            color: #000;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: #222;
+            color: #ccc;
         }
 
         nav {
@@ -286,30 +325,50 @@
             color: #444;
             font-size: 0.8rem;
         }
+
+        /* Responsive lang switcher */
+        @media (max-width: 480px) {
+            .lang-switcher {
+                position: static;
+                margin-top: 0;
+                margin-bottom: 15px;
+                align-self: center;
+            }
+
+            header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <header>
+        <div class="lang-switcher" id="lang-switcher">
+            <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+        </div>
         <h1 id="site-title"></h1>
         <div class="dev-status" id="site-subtitle"></div>
         <div class="social-links" id="social-container"></div>
     </header>
 
-    <nav>
-        <button class="active" onclick="showTab('solo')">Мои игры</button>
-        <button onclick="showTab('coop')">Совместные проекты</button>
-        <button onclick="showTab('commercial')">Коммерческий опыт</button>
-        <button onclick="showTab('contacts')">Контакты</button>
+    <nav id="main-nav">
+        <button class="active" data-tab="solo"></button>
+        <button data-tab="coop"></button>
+        <button data-tab="commercial"></button>
+        <button data-tab="contacts"></button>
     </nav>
 
     <div class="container">
         <div id="tab-solo" class="tab-content active">
-            <h2 class="section-title">Текущие проекты</h2>
+            <h2 class="section-title" id="section-current"></h2>
             <div class="grid" id="grid-solo-new"></div>
 
-            <h2 class="section-title">Архив (Старые игры)</h2>
+            <h2 class="section-title" id="section-archive"></h2>
             <div class="grid" id="grid-solo-old"></div>
         </div>
 
@@ -348,31 +407,42 @@
     <script type="module">
         import { siteData } from './data.js';
 
-        // UI Initialization
-        document.title = siteData.profile.title;
-        document.getElementById('site-title').textContent = siteData.profile.title;
-        document.getElementById('site-subtitle').textContent = siteData.profile.subtitle;
-        document.getElementById('site-footer').textContent = `© ${siteData.profile.year} ${siteData.profile.title}`;
-
-        const socialContainer = document.getElementById('social-container');
-        siteData.profile.socials.forEach(s => {
-            socialContainer.innerHTML += `<a href="${s.url}" target="_blank">${s.name}</a>`;
-        });
-
-        const contactsContainer = document.getElementById('contacts-container');
-        siteData.profile.contacts.forEach(c => {
-            contactsContainer.innerHTML += `<p><strong>${c.label}:</strong> ${c.value}</p>`;
-        });
-
-        // Navigation
-        window.showTab = (id) => {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-            document.getElementById(`tab-${id}`).classList.add('active');
-            event.currentTarget.classList.add('active');
+        /** Resolve a localizable value: if it's an object with lang keys, pick current; otherwise return as-is. */
+        const L = (val) => {
+            if (val === null || val === undefined) return '';
+            if (typeof val === 'object' && !Array.isArray(val) && (val.en !== undefined || val.ru !== undefined)) {
+                return val[currentLang] ?? val.en ?? '';
+            }
+            return val;
         };
 
-        // Story Modal Logic
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        // ---- Language Switcher ----
+        window.setLang = (lang) => {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.documentElement.lang = lang;
+            // Update switcher active state
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.lang === lang);
+            });
+            renderAll();
+        };
+
+        // ---- Navigation ----
+        const navButtons = document.querySelectorAll('#main-nav button');
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                navButtons.forEach(b => b.classList.remove('active'));
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+                btn.classList.add('active');
+            });
+        });
+
+        // ---- Story Modal Logic ----
         window.openModal = (title, textHtml) => {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-body').innerHTML = textHtml;
@@ -384,7 +454,7 @@
             document.getElementById('story-modal').classList.remove('active');
         };
 
-        // Game Modal Logic
+        // ---- Game Modal Logic ----
         window.playIframe = (src) => {
             document.getElementById('game-iframe').src = src;
             document.getElementById('game-modal').classList.add('active');
@@ -396,31 +466,36 @@
             document.getElementById('game-iframe').src = '';
         };
 
-        // Card Builder
+        // ---- Card Builder ----
         const createCard = (game) => {
             const div = document.createElement('div');
             div.className = 'card';
 
+            const title = L(game.title);
+            const shortDesc = L(game.shortDesc);
+            const fullDesc = L(game.fullDesc);
+            const ui = siteData.ui.buttons;
+
             let buttonsHtml = '';
             if (game.type === 'iframe') {
-                buttonsHtml += `<button class="btn btn-yandex" onclick="playIframe('${game.actions.iframe}')">Играть в браузере</button>`;
+                buttonsHtml += `<button class="btn btn-yandex" onclick="playIframe('${game.actions.iframe}')">${L(ui.playInBrowser)}</button>`;
             } else if (game.actions.external) {
-                buttonsHtml += `<a href="${game.actions.external}" class="btn btn-yandex" target="_blank">Ссылка</a>`;
+                buttonsHtml += `<a href="${game.actions.external}" class="btn btn-yandex" target="_blank">${L(ui.link)}</a>`;
             }
 
             if (game.actions.gp) {
                 buttonsHtml += `<a href="${game.actions.gp}" class="btn btn-gp" target="_blank">Google Play</a>`;
             }
             if (game.id === 'first-flight') {
-                buttonsHtml += `<a href="${game.actions.external}" class="btn btn-apk" target="_blank">Скачать APK</a>`;
+                buttonsHtml += `<a href="${game.actions.external}" class="btn btn-apk" target="_blank">${L(ui.downloadApk)}</a>`;
             }
 
-            let storyBtn = game.fullDesc ? `<button class="btn btn-story" onclick="openModal('${game.title}', \`${game.fullDesc}\`)" title="Подробнее о разработке">▼</button>` : '';
+            let storyBtn = fullDesc ? `<button class="btn btn-story" onclick="openModal('${title.replace(/'/g, "\\'")}', \`${fullDesc.replace(/`/g, '\\`')}\`)" title="${L(ui.details)}">▼</button>` : '';
             div.innerHTML = `
-            <img src="${game.preview}" alt="${game.title}">
+            <img src="${game.preview}" alt="${title}">
             <div class="card-body">
-                <h3>${game.title} (${game.year})</h3>
-                <p>${game.shortDesc}</p>
+                <h3>${title} (${game.year})</h3>
+                <p>${shortDesc}</p>
                 ${storyBtn ? `<div class="btn-group">${storyBtn}</div>` : ''}
                 <div class="btn-group">${buttonsHtml}</div>
             </div>
@@ -428,12 +503,56 @@
             return div;
         };
 
-        // Populate Grids
-        siteData.games.forEach(g => {
-            const containerId = `grid-${g.category}`;
-            const container = document.getElementById(containerId);
-            if (container) container.appendChild(createCard(g));
+        // ---- Full Render ----
+        const renderAll = () => {
+            // Profile
+            document.title = siteData.profile.title;
+            document.getElementById('site-title').textContent = siteData.profile.title;
+            document.getElementById('site-subtitle').textContent = L(siteData.profile.subtitle);
+            document.getElementById('site-footer').textContent = `© ${siteData.profile.year} ${siteData.profile.title}`;
+
+            // Socials
+            const socialContainer = document.getElementById('social-container');
+            socialContainer.innerHTML = '';
+            siteData.profile.socials.forEach(s => {
+                socialContainer.innerHTML += `<a href="${s.url}" target="_blank">${L(s.name)}</a>`;
+            });
+
+            // Contacts
+            const contactsContainer = document.getElementById('contacts-container');
+            contactsContainer.innerHTML = '';
+            siteData.profile.contacts.forEach(c => {
+                contactsContainer.innerHTML += `<p><strong>${L(c.label)}:</strong> ${L(c.value)}</p>`;
+            });
+
+            // Nav tab labels
+            const tabKeys = ['solo', 'coop', 'commercial', 'contacts'];
+            const navBtns = document.querySelectorAll('#main-nav button');
+            navBtns.forEach((btn, i) => {
+                btn.textContent = L(siteData.ui.tabs[tabKeys[i]]);
+            });
+
+            // Section titles
+            document.getElementById('section-current').textContent = L(siteData.ui.sections.currentProjects);
+            document.getElementById('section-archive').textContent = L(siteData.ui.sections.archive);
+
+            // Game cards
+            ['grid-solo-new', 'grid-solo-old', 'grid-coop', 'grid-commercial'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            siteData.games.forEach(g => {
+                const containerId = `grid-${g.category}`;
+                const container = document.getElementById(containerId);
+                if (container) container.appendChild(createCard(g));
+            });
+        };
+
+        // ---- Init ----
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.lang === currentLang);
         });
+        renderAll();
     </script>
 </body>
 
